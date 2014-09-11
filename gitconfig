@@ -1,0 +1,16 @@
+[color]
+	ui = true
+[user]
+	name = Tapmodo
+	email = khallman@tapmodo.com
+[alias]
+  vimdiff = difftool -y -t vimdiff
+  stat = diff --stat
+  st = status
+  co = checkout
+  ci = commit
+  br = branch
+  plog = log --pretty='format:%Cblue%h%Creset %s'
+  pulf = pull --ff-only
+  merf = merge --ff-only
+
