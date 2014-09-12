@@ -19,6 +19,7 @@ ipset add Tapmodo_Hosts 198.199.96.77   #Name:  cress.tapmodo.net
 ipset add Tapmodo_Hosts 50.57.43.175    #Name:  aji.tapmodo.net
 ipset add Tapmodo_Hosts 192.241.221.81  #Name:  tikka.tapmodo.net
 ipset add Tapmodo_Hosts 192.241.195.142 #Name:  contender-pbx.tapmodo.net
+ipset add Tapmodo_Hosts 198.199.114.188 #Name:  poppy.tapmodo.net
 
 iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 iptables -A INPUT -p tcp --dport 22 -j ACCEPT
