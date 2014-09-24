@@ -14,7 +14,8 @@ fi
 
 if [ -f /var/run/reboot-required ]
 then
-	exit 1
+	echo "Reboot required"
+	exit 2
 fi
 
 echo "OK: packages up-to-date"
