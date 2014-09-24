@@ -1,25 +1,31 @@
 #!/bin/bash
 
 UPDATE_FILE=/var/lib/update-notifier/updates-available
-SUMMARY=`cat ${UPDATE_FILE}`
-SUMMARY=`echo ${SUMMARY}`
+SUMMARY=""
 OUTPUT="OK: Packages up-to-date"
-REGEXM='([0-9]+) packages can be updated\. ([0-9]+) updates are security updates\.'
+RETCODE=0
 
-if [[ "$SUMMARY" =~ $REGEXM ]]
+if [ -f ${UPDATE_FILE} ]
 then
+  SUMMARY=`cat ${UPDATE_FILE}`
+  SUMMARY=`echo ${SUMMARY}`
+  REGEXM='([0-9]+) packages can be updated\. ([0-9]+) updates are security updates\.'
 
-  if [ "${BASH_REMATCH[1]}" -gt "0" ]
+  if [[ "$SUMMARY" =~ $REGEXM ]]
   then
-    OUTPUT="${BASH_REMATCH[1]} Updates. ${BASH_REMATCH[2]} Security."
-    RETCODE=1
-  fi
 
-  if [ "${BASH_REMATCH[1]}" -gt "15" ]
-  then
-    RETCODE=2
-  fi
+    if [ "${BASH_REMATCH[1]}" -gt "0" ]
+    then
+      OUTPUT="${BASH_REMATCH[1]} Updates. ${BASH_REMATCH[2]} Security."
+      RETCODE=1
+    fi
 
+    if [ "${BASH_REMATCH[1]}" -gt "15" ]
+    then
+      RETCODE=2
+    fi
+
+  fi
 fi
 
 if [ -f /var/run/reboot-required ]
