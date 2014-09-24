@@ -1,6 +1,13 @@
 #!/bin/bash
-cd `dirname $0`
-cp -v check_* /usr/lib/nagios/plugins
 
-chmod 755 /usr/lib/nagios/plugins/check_debian_packages
-chmod 755 /usr/lib/nagios/plugins/check_docker
+NAGIOS_PLUGINS=/usr/lib/nagios/plugins
+
+install_plugin() {
+	cp -v "${1}" "${NAGIOS_PLUGINS}"
+	chmod 755 "${NAGIOS_PLUGINS}/${1}"
+}
+
+cd `dirname $0`
+install_plugin check_debian_packages
+install_plugin check_docker
+
