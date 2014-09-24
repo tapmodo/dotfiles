@@ -12,7 +12,7 @@ then
 	exit 1
 fi
 
-if grep -i "restart required" "${UPDATE_FILE}"
+if [ -f /var/run/reboot-required ]
 then
 	exit 1
 fi
