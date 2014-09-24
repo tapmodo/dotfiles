@@ -4,14 +4,20 @@ UPDATE_FILE=/var/lib/update-notifier/updates-available
 SUMMARY=`cat ${UPDATE_FILE}`
 SUMMARY=`echo ${SUMMARY}`
 OUTPUT="OK: Packages up-to-date"
+REGEXM='([0-9]+) packages can be updated\. ([0-9]+) updates are security updates\.'
 
-if [[ $SUMMARY =~ "^([0-9]+) packages can be updated\. ([0-9]+) updates are security updates." ]]
+if [[ "$SUMMARY" =~ $REGEXM ]]
 then
 
-  if [ "${BASH_REMATCH[1]}" != "0" ]
+  if [ "${BASH_REMATCH[1]}" > "0" ]
   then
     OUTPUT="${BASH_REMATCH[1]} Updates. ${BASH_REMATCH[2]} Security."
     RETCODE=1
+  fi
+
+  if [ "${BASH_REMATCH[1]}" > 15 ]
+  then
+    RETCODE=2
   fi
 
 fi
