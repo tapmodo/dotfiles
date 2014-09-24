@@ -1,23 +1,27 @@
 #!/bin/bash
 
 UPDATE_FILE=/var/lib/update-notifier/updates-available
+SUMMARY=`cat ${UPDATE_FILE}`
+SUMMARY=`echo ${SUMMARY}`
+OUTPUT="OK: Packages up-to-date"
 
-if grep -i "security updates" "${UPDATE_FILE}"
+if [[ $SUMMARY =~ "^([0-9]+) packages can be updated\. ([0-9]+) updates are security updates." ]]
 then
-	exit 1
-fi
 
-if grep -i "can be updated" "${UPDATE_FILE}"
-then
-	exit 1
+  if [ "${BASH_REMATCH[1]}" != "0" ]
+  then
+    OUTPUT="${BASH_REMATCH[1]} Updates. ${BASH_REMATCH[2]} Security."
+    RETCODE=1
+  fi
+
 fi
 
 if [ -f /var/run/reboot-required ]
 then
-	echo "Reboot required"
-	exit 2
+  OUTPUT="Reboot required. ${OUTPUT}"
+  RETCODE=2
 fi
 
-echo "OK: packages up-to-date"
-exit 0
+echo "$OUTPUT"
+exit $RETCODE
 
