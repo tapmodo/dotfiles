@@ -12,4 +12,4 @@ cd `dirname $0`
 install_plugin check_debian_packages
 install_plugin check_docker
 install_plugin check_mongodb
-
+install_plugin check_rabbitmq
